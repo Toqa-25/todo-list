@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- css fils -->
+     <link rel="stylesheet" href="css/normalize.css">
+     <link rel="stylesheet" href="css/all.min.css">
+     <link rel="stylesheet" href="css/style.css">
+     <!-- google fonts -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Pushster&amp;display=swap" rel="stylesheet">
+     <!-- page title -->
+    <title>ToDo List</title>
+</head>
+<body>
+    <section class="todo-section">
+        <div class="todo-main-head container ">
+            <h2 class="todo-head">todo list</h2>
+        </div>
+        <div class="todo-input pad container">
+            <input type="text" name="" id="input-field">
+            <span class="pluse" id="plus">+</span>
+        </div>
+        <div class="todo-group pad ">
+        <div class="todo-list doing" id="todo-list-do">
+             <div class="todo-list-header-group">
+                 <h4 class="todo-list-head">to do tasks <span class="tasks-number"></span><i class="fas fa-chevron-down todo-chevron"></i></h4>
+                <button class="btn delet-all-tasks">delete all</button>
+            </div>
+           <div class="todo-list-content todo">
+           </div>
+        </div>
+        <div class="todo-list completed" id="todo-list-complete">
+            <div class="todo-list-header-group">
+                <h4 class="todo-list-head">completed tasks <span class="completed-tasks-number"></span><i class="fas fa-chevron-down complete-chevron"></i></h4>
+                <button class="btn delet-all-completed-tasks">delete all</button>
+            </div>
+           <div class="todo-list-content complet">
+           </div>
+        </div>
+        </div>
+    </section>
+    <div class="bottom-group">
+             <p>made with <i class="fas fa-heart"></i> by <a class="developer link-none" href="https://toqa-25.github.io/portfolio/">toqa</a></p>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</body>
+</html>
