@@ -61,8 +61,8 @@ section{
    } 
 }
 #input-field {
-    width: calc(100% - 30px);
-    margin: 0 15px;
+    width: calc(100% - 50px);
+    margin: 0 20px;
     height: 50px;
     border: none;
     outline: none;
@@ -91,7 +91,7 @@ section{
     justify-content: center;
     align-items: center;
     position: absolute;
-    right: 15px;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--main-color);
@@ -102,7 +102,7 @@ section{
 .todo-group {
     background-color: var(--main-alt-color);
     /* margin-top: 30px; */
-    padding: 15px;
+    padding: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -173,7 +173,6 @@ section{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* flex-wrap: wrap; */
 }
 .todo-list-head {
     text-transform: capitalize;
@@ -292,22 +291,4 @@ margin: 16px auto;
     color: var(--main-color);
 } 
 
-@media (max-width:767px){
-    .todo-group{
-        width: 100%;
-    }
-    .todo-list-head {
-        font-size: 13px;
-    }
-}
-
-@media (max-width:375px){
-    .todo-list-header-group .btn{
-        margin-left: 10px;
-        margin-top: 10px;
-    }
-    .todo-list-header-group {
-        flex-direction: column;
-    }
-
-}
+@media (max-width:2)

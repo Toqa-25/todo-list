@@ -297,17 +297,19 @@ margin: 16px auto;
         width: 100%;
     }
     .todo-list-head {
-        font-size: 13px;
+    font-size: 12px;
     }
 }
 
 @media (max-width:375px){
-    .todo-list-header-group .btn{
-        margin-left: 10px;
-        margin-top: 10px;
-    }
-    .todo-list-header-group {
-        flex-direction: column;
-    }
-
+    .todo-list-head {
+    font-size: 12px;
+}
+.todo-list-header-group {
+    flex-direction: column;
+}
+.todo-list-header-group .btn{
+    margin-left: 8px;
+    margin-top: 10px;
+}
 }

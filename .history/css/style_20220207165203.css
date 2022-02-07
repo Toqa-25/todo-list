@@ -302,10 +302,10 @@ margin: 16px auto;
 }
 
 @media (max-width:375px){
-    .todo-list-header-group .btn{
-        margin-left: 10px;
+    /* .todo-list-header-group .btn{
+        margin-left: 8px;
         margin-top: 10px;
-    }
+    } */
     .todo-list-header-group {
         flex-direction: column;
     }

@@ -18,7 +18,7 @@ body{
     min-height: 100vh;
 }
 .container{
-    width:90%;
+    width:80%;
     margin:0 auto;
 }
 
@@ -36,9 +36,8 @@ section{
 
 }
 .todo-main-head {
-    /* padding-top: 20px;
-    margin-top: 20px; */
-    margin: 20px auto 0;
+    padding-top: 20px;
+    margin-top: 20px;
 }
 .todo-head {
     color: var(--main-color);
@@ -53,16 +52,15 @@ section{
     border-radius: 5px;
     width: 600px;
     margin: 0 auto;
-    padding: 15px 0;
 }
-@media(max-width:991px){
+@media(max-width:767px){
    .todo-input{
-       width:90%;
+       width:80%;
    } 
 }
 #input-field {
-    width: calc(100% - 30px);
-    margin: 0 15px;
+    width: calc(100% - 50px);
+    margin: 0 20px;
     height: 50px;
     border: none;
     outline: none;
@@ -91,7 +89,7 @@ section{
     justify-content: center;
     align-items: center;
     position: absolute;
-    right: 15px;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--main-color);
@@ -102,7 +100,7 @@ section{
 .todo-group {
     background-color: var(--main-alt-color);
     /* margin-top: 30px; */
-    padding: 15px;
+    padding: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -112,6 +110,12 @@ section{
     border-radius: 5px;
 
 }
+@media(max-width:767px){
+   
+    .todo-list {
+        width:100%;
+    }
+}
 .todo-list {
     background-color: var(--white-color);
     padding: 10px 20px;
@@ -119,12 +123,6 @@ section{
     flex:1;
     border-radius: 5px;
      width: 600px;
-}
-@media(max-width:767px){
-   
-    .todo-list {
-        width:100%;
-    }
 }
 .todo-list-content , .complet {
     padding:20px;
@@ -173,7 +171,6 @@ section{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* flex-wrap: wrap; */
 }
 .todo-list-head {
     text-transform: capitalize;
@@ -291,23 +288,3 @@ margin: 16px auto;
   font-size: 20px;
     color: var(--main-color);
 } 
-
-@media (max-width:767px){
-    .todo-group{
-        width: 100%;
-    }
-    .todo-list-head {
-        font-size: 13px;
-    }
-}
-
-@media (max-width:375px){
-    .todo-list-header-group .btn{
-        margin-left: 10px;
-        margin-top: 10px;
-    }
-    .todo-list-header-group {
-        flex-direction: column;
-    }
-
-}
