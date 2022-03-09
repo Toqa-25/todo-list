@@ -1,14 +1,21 @@
+
 // const variables
 let inputTask = document.getElementById("input-field"),
-  plusButton = document.getElementById("plus"),
-  toDoContent = document.querySelector(".todo"),
-  completeContent = document.querySelector(".complet"),
-  taskText = document.querySelector(".todo-list-text");
+    plusButton = document.getElementById("plus"),
+    toDoContent = document.querySelector(".todo"),
+    completeContent = document.querySelector(".complet"),
+    taskText = document.querySelector(".todo-list-text"),
+    numberOfTasks = document.querySelector(".tasks-number"),
+    numberOfCompletedTasks = document.querySelector(".completed-tasks-number"),
+    todoChevron = document.querySelector(".todo-chevron"),
+    completeChevron = document.querySelector(".complete-chevron"),
+    deleteAllTasks = document.querySelector(".delet-all-tasks"),
+    deleteAllCompletedTasks = document.querySelector(".delet-all-completed-tasks");
+ 
 // var variables
-let checkedSpan = [...document.querySelectorAll(".todo-list-checked")];
-let checkedClasses = [...document.querySelectorAll(".checked")];
-let buttonSgroup = [...document.querySelectorAll(".delete")];
-// local variables
+var checkedSpan = [...document.querySelectorAll(".todo-list-checked")];
+var checkedClasses = [...document.querySelectorAll(".checked")];
+var buttonSgroup = [...document.querySelectorAll(".delete")];
 let todoList = JSON.parse(localStorage.getItem("tasks"))
   ? JSON.parse(localStorage.getItem("tasks"))
   : [];
@@ -16,171 +23,218 @@ let completeList = JSON.parse(localStorage.getItem("completedTasks"))
   ? JSON.parse(localStorage.getItem("completedTasks"))
   : [];
 /********************************************************** */
- plusButton.onclick = addTask;
- inputTask.addEventListener("keyup", function (event) {
-   // Number 13 is the "Enter" key on the keyboard
-   if (event.keyCode === 13) {
-     addTask();
-   }
- });
+if ( todoList.length >= 1) {
+    numberOfTasks.innerHTML = todoList.length;
+}
+else{
+    numberOfTasks.innerHTML = 0;
+}
+
+if (completeList && completeList.length >= 1) {
+  numberOfCompletedTasks.innerHTML = completeList.length;
+} else {
+  numberOfCompletedTasks.innerHTML = 0;
+}
+/********************************************************** */
+window.onload = function () {
+    inputTask.focus()
+}
+plusButton.onclick = addTask;
+inputTask.addEventListener("keyup", function (event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    addTask();
+  }
+});
 /************************************* */
 // 1- add task
-//    function addTask() {
-//  if (inputTask.value != null && inputTask.value != "") {
-//    toDoContent.innerHTML += `   <div class="todo-list-task-group">
-//               <div class="todo-list-task doing-task">
-//                   <p class="todo-list-text">${inputTask.value}</p>
-//                   <span id="todo-list-doing" class="todo-list-checked"></span>
-//               </div>
-//               <button class="btn delete">delete</button>
-//           </div>`;
-//    todoList = [...todoList, inputTask.value];
-//    localStorage.setItem("tasks", JSON.stringify(todoList));
-//    inputTask.value = "";
-//    currentTasks();
-//    deleteDoingTask = []
-//      deleteDoingTask = Array.from(document.querySelectorAll(".delete"));
-//      deleteTask();
-//      checked = []
-//      checked = Array.from(document.querySelectorAll(".todo-list-checked"));
-//      checkedTask();
-//  }
-// } 
+function addTask() {
+  if (inputTask.value != null && inputTask.value != "") {
+      if (todoList.includes(inputTask.value.trim())) {
+          swal("This Task is  Already Exists.");
+      }
+          toDoContent.innerHTML += `  <div class="todo-list-task-group">
+                                        <div class="todo-list-task doing-task">
+                                            <p class="todo-list-text">${inputTask.value.trim()}</p>
+                                            <span id="todo-list-doing" class="todo-list-checked"></span>
+                                        </div>
+                                        <button class="btn delete">delete</button>
+                                    </div>`;
+          todoList = [...todoList, inputTask.value.trim()];
+          localStorage.setItem("tasks", JSON.stringify(todoList));
+          inputTask.value = "";
+          currentTasks(toDoContent, todoList);
+          checkedSpan = [];
+          checkedSpan = [...document.querySelectorAll(".todo-list-checked")];
+          checkedTask(checkedSpan);
+          buttonSgroup = [];
+          buttonSgroup = [...document.querySelectorAll(".delete")];
+          deleteUneededTask(buttonSgroup);
+          numberOfTasks.innerHTML.innerHTML++;
+          inputTask.focus();
+      
+  }
+  else {
+      swal("Enter Your Task");
+  }
+}
 
- // 2- drow new tasks
-    // function currentTasks() {
-    //     toDoContent.innerHTML = ""
-    //     for (i = 0; i < todoList.length ; i++){
-    //         toDoContent.innerHTML += `<div class="todo-list-task-group">
-    //         <div class="todo-list-task doing-task">
-    //         <p class="todo-list-text">${todoList[i]}</p>
-    //         <span id="todo-list-doing" class="todo-list-checked"></span>
-    //         </div>
-    //         <button class="btn delete">delete</button>
-    //         </div>`;
-    //     }
-    // //   deleteDoingTask = []
-    // //   deleteDoingTask = Array.from(document.querySelectorAll(".delete"));
-    // //   deleteTask();
-    // //   checked = []
-    // //   checked = Array.from(document.querySelectorAll(".todo-list-checked"));
-    // //   checkedTask();
-    // } currentTasks()
+// 2- drow new tasks
+function currentTasks(plceContent, tasksArray) {
+  plceContent.innerHTML = "";
+  for (i = 0; i < tasksArray.length; i++) {
+    plceContent.innerHTML += `<div class="todo-list-task-group">
+                <div class="todo-list-task doing-task">
+                <p class="todo-list-text">${tasksArray[i]}</p>
+                <span id="todo-list-doing" class="todo-list-checked"></span>
+                </div>
+                <button class="btn delete">delete</button>
+                </div>`;
+  }
+  checkedSpan = [];
+  checkedSpan = [...document.querySelectorAll(".todo-list-checked")];
+  checkedTask(checkedSpan);
+//   console.log("current", checkedSpan);
+  buttonSgroup = [];
+  buttonSgroup = [...document.querySelectorAll(".delete")];
+    deleteUneededTask(buttonSgroup);
+       numberOfTasks.innerHTML = "";
+       numberOfTasks.innerHTML = todoList.length;
+}
+currentTasks(toDoContent, todoList);
 
-//  let deleteDoingTask = Array.from(document.querySelectorAll(".delete"));
-//  let checked = Array.from(document.querySelectorAll(".todo-list-checked"));
+// 3- drow new tasks
+function currentCheckedTasks(plceContent, tasksArray) {
+  plceContent.innerHTML = "";
+  for (i = 0; i < tasksArray.length; i++) {
+    plceContent.innerHTML += `<div class="todo-list-task-group ">
+                <div class="todo-list-task doing-task completed-task">
+                <p class="todo-list-text">${tasksArray[i]}</p>
+                <span id="todo-list-doing" class="todo-list-checked checked"><i class="fas fa-check"></i></span>
+                </div>
+                <button class="btn delete">delete</button>
+                </div>`;
+  }
+  checkedClasses = [];
+  checkedClasses = [...document.querySelectorAll(".checked")];
+  unCheckedTask(checkedClasses);
+  buttonSgroup = [];
+  buttonSgroup = [...document.querySelectorAll(".delete")];
+    deleteUneededTask(buttonSgroup);
+        numberOfCompletedTasks.innerHTML = "";
+        numberOfCompletedTasks.innerHTML = completeList.length;
+}
+currentCheckedTasks(completeContent, completeList);
 
-// 3- checked completed task
-    // function checkedTask() {
-    // checked.forEach(checkedTask => {
-    //     checkedTask.onclick = function (checkedTask) {
-    //         checkedTask.currentTarget.innerHTML = `<i class="fas fa-check"></i>`;
-    //         let childTask = checkedTask.currentTarget.parentElement,
-    //           childTaskTest = childTask.firstElementChild.innerHTML,
-    //           parentTask = childTask.parentElement,
-    //           deletedTaskIndex = todoList.indexOf(parentTask);
-    //         parentTask.remove()
-    //         todoList.splice(deletedTaskIndex, 1);
-    //         localStorage.setItem("tasks", JSON.stringify(todoList));
-    //         completeContent.innerHTML += `<div class="todo-list-task-group">
-    //           <div class="todo-list-task completed-task">
-    //                <p class="todo-list-text">${childTaskTest}</p>
-    //                <span id="todo-list-doing" class="todo-list-checked checked"><i class="fas fa-check"></i></span>
-    //            </div>
-    //            <button class="btn delete" id="delete-complete">delete</button>
-    //        </div>`;
+// 4- drow completed tasks
+
+function checkedTask(checkBoxs) {
+  checkBoxs.forEach((checkBox) => {
+    checkBox.onclick = function addChecked(checkBox) {
+      deleteTask(checkBox.currentTarget);
+      transformTask(checkBox.currentTarget);
+    };
+  });
+}
+checkedTask(checkedSpan);
+
+//5- drow uncompleted Tasks
+function unCheckedTask(checkBoxs) {
+  checkBoxs.forEach((checkBox) => {
+    checkBox.onclick = function addChecked(checkBox) {
+      deleteTask(checkBox.currentTarget);
+        transformTask(checkBox.currentTarget);
+    };
+  });
+}
+unCheckedTask(checkedClasses);
+
+// 6- delete tasks
+/************************************* */
+function deleteTask(current) {
+  let currentParent = current.parentElement,
+    element = currentParent.parentElement,
+    elementFirstParent = element.firstElementChild,
+    elementText = elementFirstParent.firstElementChild.innerHTML;
+    if (elementFirstParent.classList.contains("completed-task")) {
+        completeList.splice(completeList.indexOf(elementText), 1);
+        localStorage.setItem("completedTasks", JSON.stringify(completeList));
+        numberOfCompletedTasks.innerHTML = ""
+        numberOfCompletedTasks.innerHTML = completeList.length
         
-    //         completeList = [...completeList, childTaskTest];
-    //        localStorage.setItem("completedTasks" , JSON.stringify(completeList));
-    //         completedTasks();  
-    //     };
-    // })
-    // }checkedTask();
+} else {
+    todoList.splice(todoList.indexOf(elementText), 1);
+    localStorage.setItem("tasks", JSON.stringify(todoList));
+    numberOfTasks.innerHTML = ""
+    numberOfTasks.innerHTML = todoList.length
+}
+element.remove();
+console.log(element);
+console.log(elementText);
+}
 
-// 4- delete unneeded tasks from doing
-    // function deleteTask() {
-    //     deleteDoingTask.forEach((deleteButton) => {
-    //         deleteButton.onclick = function (deleteButton) {
-    //             let parentTask = deleteButton.currentTarget.parentElement,
-    //             firstChild = parentTask.firstElementChild,
-    //             firstChildText = firstChild.firstElementChild.innerHTML,
-    //             deletedTaskIndex = todoList.indexOf(firstChildText);
-    //             parentTask.remove();
-    //             todoList.splice(deletedTaskIndex, 1);
-    //             localStorage.setItem("tasks", JSON.stringify(todoList));
-    //         };
-    //     });
-    // }deleteTask();
-    
-// let unChecked = Array.from(document.querySelectorAll(".checked"));
- // 5- drow completed tasks
+function transformTask(current) {
+  let currentParent = current.parentElement,
+    element = currentParent.parentElement,
+    elementFirstParent = element.firstElementChild,
+    elementText = elementFirstParent.firstElementChild.innerHTML;
+  if (elementFirstParent.classList.contains("completed-task")) {
+    todoList = [...todoList, elementText];
+    localStorage.setItem("tasks", JSON.stringify(todoList));
+    currentTasks(toDoContent, todoList);
+  } else {
+    // completeList.push(elementText);
+        completeList = [...completeList, elementText];
+    localStorage.setItem("completedTasks", JSON.stringify(completeList));
+    currentCheckedTasks(completeContent, completeList);
+  }
+}
 
-// function completedTasks() {
-//     completeContent.innerHTML = ""
-//     for (i = 0; i < completeList.length; i++){
-//       completeContent.innerHTML += `<div class="todo-list-task-group">
-//               <div class="todo-list-task completed-task">
-//                    <p class="todo-list-text">${completeList[i]}</p>
-//                    <span id="todo-list-doing" class="todo-list-checked checked"><i class="fas fa-check"></i></span>
-//                </div>
-//                <button class="btn delete" id="delete-complete">delete</button>
-//            </div>`;
-//       unChecked = [];
-//       unChecked = Array.from(document.querySelectorAll(".checked"));
-//       unCheckedTask();
-//         deleteDoingTask = []
-//         deleteDoingTask = Array.from(document.querySelectorAll(".delete"));
-//         deleteTask();
-//     }
-// } completedTasks();
+function deleteUneededTask(checkBoxs) {
+  checkBoxs.forEach((checkBox) => {
+    checkBox.onclick = function addChecked(checkBox) {
+      let element = checkBox.currentTarget.parentElement,
+        elementFirstParent = element.firstElementChild,
+        elementText = elementFirstParent.firstElementChild.innerHTML;
 
- // 6- unChecked Completed task
-// function unCheckedTask(){
-//     unChecked.forEach(unCheckedTask => {
-//         unCheckedTask.onclick = function (unCheckedTask) {
-//             unCheckedTask.currentTarget.innerHTML = " "
-//             let childunCheckedTask = unCheckedTask.currentTarget.parentElement,
-//               childUnCheckedTaskText =
-//                 childunCheckedTask.firstElementChild.innerHTML,
-//               parentUnCheckedTask = childunCheckedTask.parentElement,
-//               deletedUnCheckedTaskIndex = completeList.indexOf(parentUnCheckedTask);
-
-//             parentUnCheckedTask.remove();
-//             completeList.splice(deletedUnCheckedTaskIndex, 1);
-//             localStorage.setItem(
-//               "completedTasks",
-//               JSON.stringify(completeList)
-//             );
-
-//             toDoContent.innerHTML += `<div class="todo-list-task-group">
-//               <div class="todo-list-task completed-task">
-//                    <p class="todo-list-text">${childUnCheckedTaskText}</p>
-//                    <span id="todo-list-doing" class="todo-list-checked "></span>
-//                </div>
-//                <button class="btn delete" id="delete-complete">delete</button>
-//            </div>`;
-            
-//             todoList = [...todoList, childUnCheckedTaskText];
-//             localStorage.setItem("tasks", JSON.stringify(todoList));
-//             currentTasks();
-//         }
-//         })
-// }unCheckedTask();
-
-// 7- delete unneeded tasks from doing
-    // function deleteUnCheckedTask() {
-    //   deleteDoingTask.forEach((deleteButton) => {
-    //     deleteButton.onclick = function (deleteButton) {
-    //       let parentTask = deleteButton.currentTarget.parentElement,
-    //         firstChild = parentTask.firstElementChild,
-    //         firstChildText = firstChild.firstElementChild.innerHTML,
-    //         deletedTaskIndex = completeList.indexOf(firstChildText);
-    //       parentTask.remove();
-    //       completeList.splice(deletedTaskIndex, 1);
-    //       localStorage.setItem("completedTasks", JSON.stringify(completeList));
-    //     };
-    //   });
-    // }deleteUnCheckedTask();
+      element.remove();
+      if (elementFirstParent.classList.contains("completed-task")) {
+        completeList.splice(completeList.indexOf(elementText), 1);
+          localStorage.setItem("completedTasks", JSON.stringify(completeList));
+              numberOfCompletedTasks.innerHTML = "";
+              numberOfCompletedTasks.innerHTML = completeList.length;
+      } else {
+        todoList.splice(todoList.indexOf(elementText), 1);
+        localStorage.setItem("tasks", JSON.stringify(todoList));
+           numberOfTasks.innerHTML = "";
+           numberOfTasks.innerHTML = todoList.length;
+      }
+      console.log(elementText);
+      console.log(elementFirstParent);
+      console.log(element);
+    };
+  });
+}
+deleteUneededTask(buttonSgroup);
 
 
-/***************************** */  
+todoChevron.onclick = function (){
+    toDoContent.classList.toggle("show")
+}
+completeChevron.onclick = function () {
+  completeContent.classList.toggle("show")
+};
+
+deleteAllTasks.onclick = function () {
+    toDoContent.innerHTML = ""
+    todoList = [];
+    localStorage.setItem("tasks", JSON.stringify(todoList));
+    currentTasks(toDoContent, todoList);
+}
+deleteAllCompletedTasks.onclick = function () {
+  toDoContent.innerHTML = "";
+  completeList = [];
+  localStorage.setItem("completedTasks", JSON.stringify(completeList));
+  currentCheckedTasks(completeContent, completeList);
+};
+
